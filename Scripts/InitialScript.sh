@@ -17,9 +17,17 @@ sudo apt install lolcat fortune cowsay fail2ban tripwire gnome-disk-utility plan
 
 #Stupid shit I like installing
 sudo apt install plank gnome-disk-utility gparted minder telegram-desktop yakuake sl cmatrix -y
+cowsay "Now lets change some default settings" | lolcat 
+echo -e "Changing default nameservers..."
+#adding nordpvn dns and cloudfare
+sudo echo "nameserver 103.86.96.100
+nameserver 103.86.99.100
+nameserver 1.1.1.1" > /etc/resolv.conf
 
 #echo -e "Snap Applications"
 #sudo snap install norpass termius-app
+cowsay "Shall we run Lynis to check your score? I'll asume you said yes." | lolcat 
+sudo lynis audit system
 
 echo -e "Installation Complete"
 
