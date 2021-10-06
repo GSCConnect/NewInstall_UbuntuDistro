@@ -79,6 +79,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
     alias vpnc='nordvpn connect United_States'
+    alias ESP='cd /home/espiritusanto.mx/public_html/ && git pull'
+    alias CPpass='adminPass'
     alias vpnd='nordvpn d'
     alias vpns='nordvpn status'
     alias fuck='sudo apt update'
