@@ -111,6 +111,9 @@ if [[ $audit == "yes" ]]; then
 else 
     echo 'Ok, well you sure are feeling lucky then' && sleep 3
 fi
+
+cd
+
 git clone https://gitlab.com/snippets/2180426.git
 
 cd 2180426
@@ -158,6 +161,7 @@ service ssh restart && service fail2ban restart
 git config --global user.name "gscconnect"
 git config --global user.email "admin@gscloudnetwork.com"
 
+cd 
 git clone https://github.com/GSCConnect/GS-Cyberpanel.git && cd GS-Cyberpanel
 chmod +x install.sh && ./install.sh 
 
