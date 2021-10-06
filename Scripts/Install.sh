@@ -31,7 +31,7 @@ trap ctrl_c INT
 e "Another fresh install you fucking Distro Hoper?"
 e "First let's update the packages"
 e "Welcome Mother Fucker, we need to set up a user that ISN'T root, kindly enter the username you wish to setup with sudo privilages"
-read -p 'Type your username:\n' usernew
+read -p "Type your username: \n" usernew
 echo ""
 adduser -d -m $usernew
 e "ight $usernew , lets move on"
@@ -42,10 +42,10 @@ sudo apt update && sudo apt upgrade -y
 
 e -------------------------------------------------------------------------
 e "Done"
-read -p 'Do you wish to install CLI Tools? (Yes or No). \n :' clitools
+read -p "Do you wish to install CLI Tools? (Yes or No). \n :" clitools
 echo ""
 if [[ $clitools == "yes" ]]; then 
-    sudo apt install terminator lynis debsecan python3-pip iptraf-ng htop whois net-tools iwconfig glances adb fastboot testdisk android-sdk locate ncdu libpam-tmpdir libpam-usb -y 
+    sudo apt install terminator lynis debsecan python3-pip iptraf-ng htop whois net-tools glances adb fastboot testdisk android-sdk locate ncdu libpam-tmpdir -y 
 else 
     echo ' Ok well thats gay'
 fi 
