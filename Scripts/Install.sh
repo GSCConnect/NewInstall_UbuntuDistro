@@ -33,7 +33,7 @@ e "First let's update the packages"
 e "Welcome Mother Fucker, we need to set up a user that ISN'T root, kindly enter the username you wish to setup with sudo privilages"
 read -p "Type your username: \n" usernew
 echo ""
-adduser -d -m $usernew
+useradd -d -m $usernew
 e "ight $usernew , lets move on"
 sleep 2
 e 'Updating packages'
@@ -42,10 +42,10 @@ sudo apt update && sudo apt upgrade -y
 
 e -------------------------------------------------------------------------
 e "Done"
-read -p "Do you wish to install CLI Tools? (Yes or No). \n :" clitools
+read -p "Do you wish to install CLI Tools? (Yes or No). :  " clitools
 echo ""
 if [[ $clitools == "yes" ]]; then 
-    sudo apt install terminator lynis debsecan python3-pip iptraf-ng htop whois net-tools glances adb fastboot testdisk android-sdk locate ncdu libpam-tmpdir -y 
+    sudo apt install terminator lynis debsecan python3-pip iptraf-ng htop whois net-tools glances adb fastboot aptitude testdisk android-sdk locate ncdu libpam-tmpdir -y 
 else 
     echo ' Ok well thats gay'
 fi 
@@ -56,7 +56,7 @@ sleep 4
 e "You like gotta have this on yo system brother"
 e -------------------------------------------------------------
 
-sudo apt install lolcat fortune cowsay fail2ban gnome-disk-utility plank git selinux-* terminator clamav-* rkhunter libpam-google-authenticator  libpam-tmpdir libpam-passwdqc libpam-ssh libpam-python libpam-mount libpam-cracklib libpam-mklocaluser libpam-systemd ncdu testdisk debsecan apt-listchanges needrestart debsums  -y
+sudo aptitude install lolcat fortune cowsay fail2ban gnome-disk-utility plank git selinux-* terminator rkhunter libpam-google-authenticator libpam-tmpdir libpam-passwdqc libpam-ssh libpam-python libpam-mount libpam-cracklib libpam-mklocaluser libpam-systemd ncdu testdisk debsecan apt-listchanges needrestart debsums  -y
 
 #adding repository key for lynis 
 wget -O - https://packages.cisofy.com/keys/cisofy-software-public.key | sudo apt-key add -
@@ -67,7 +67,7 @@ sudo apt update && apt install apt-transport-https lynis -y
 sudo apt autoremove -y && apt autopurge -y
 
 #Stupid shit I like installing
-sudo apt install plank gnome-disk-utility gparted minder telegram-desktop yakuake sl cmatrix -y
+sudo aptitude install plank gnome-disk-utility gparted minder telegram-desktop yakuake sl cmatrix -y
 
 cowsay "Now lets change some default settings" | lolcat 
 sleep 3
@@ -103,12 +103,17 @@ if [[ $audit == "yes" ]]; then
 else 
     echo 'Ok, well you sure are feeling lucky then' && sleep 3
 fi
+git clone https://gitlab.com/snippets/2180426.git
+git clone https://gitlab.com/snippets/2180351.git
+cd 2180426
 
 e "---------------------------------------------------------"
 chmod +x jail_user.sh && chmod +x csf.sh
 e "Installing CSF and Adding new User with chroot configuration"
 sleep 4
+e "Runnng CSF Install Script"
 ./csf.sh
+e "done, will now configure the jail"
 ./jail_user.sh
 cowsay "Done with that" | lolcat 
 sleep 4
@@ -122,7 +127,7 @@ echo ""
 if [[ $dumbass == "yes" ]]; then
     sudo hostnamectl set-hostname $hostname
 elif 
-    read -p "Type your hostname correctly this time:" dumbass2
+    read -p "Type your hostname correctly this time:  " dumbass2
 	echo ""
 else
     sudo hostnamectl set-hostname $dumbass2
