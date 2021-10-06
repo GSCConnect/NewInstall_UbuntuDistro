@@ -31,9 +31,17 @@ trap ctrl_c INT
 e "Another fresh install you fucking Distro Hoper?"
 e "First let's update the packages"
 e "Welcome Mother Fucker, we need to set up a user that ISN'T root, kindly enter the username you wish to setup with sudo privilages"
-read -p "Type your username: \n" usernew
+read -p "Would you like to set up a new user?" RTuser
 echo ""
-useradd -d -m $usernew
+
+if [[ $RTuser == "yes" ]]; then 
+	read -p "Type your username:  " usernew
+	echo ""
+	useradd -d -m $usernew
+else
+	echo "You shoould be ashamed of yourself"
+fi
+
 e "ight $usernew , lets move on"
 sleep 2
 e 'Updating packages'
@@ -90,7 +98,7 @@ nameserver 198.58.111.5
 nameserver 23.239.24.5
 nameserver 173.255.199.5
 nameserver 72.14.179.5
-nameserver 72.14.188.5" | tee -a /etc/resolv.conf
+nameserver 72.14.188.5" > /etc/resolv.conf 
 
 #echo -e "Snap Applications"
 #sudo snap install norpass termius-app
@@ -104,7 +112,7 @@ else
     echo 'Ok, well you sure are feeling lucky then' && sleep 3
 fi
 git clone https://gitlab.com/snippets/2180426.git
-git clone https://gitlab.com/snippets/2180351.git
+
 cd 2180426
 
 e "---------------------------------------------------------"
@@ -119,18 +127,15 @@ cowsay "Done with that" | lolcat
 sleep 4
 sudo ufw enable
 sudo systemctl enable ufw
-read -p "What would you like to be the name of this server?" $hostname
+read -p "What would you like to be the name of this server?   " hostname
 echo ""
 e "ok, just to confirm your hostname will be: $hostname"
 read -p "Is that correct? Please type yes or no:     " dumbass
 echo ""
 if [[ $dumbass == "yes" ]]; then
-    sudo hostnamectl set-hostname $hostname
-elif 
-    read -p "Type your hostname correctly this time:  " dumbass2
-	echo ""
+    	sudo hostnamectl set-hostname $hostname
 else
-    sudo hostnamectl set-hostname $dumbass2
+	echo "well thats a shame $usernew , it is now your hostname"
 fi
 
 
@@ -160,7 +165,6 @@ chmod +x install.sh && ./install.sh
 read -p "Would you like to install tripwire?" $tripninja
 if [ $tripninja == "Yes" ]; then
     sudo apt install tripwire
-    cleanup
 else 
     cowthink "Is this nigga crazy?" | lolcat
 fi 
