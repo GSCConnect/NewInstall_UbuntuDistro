@@ -160,6 +160,12 @@ If you do not wish to install something please make sure to type the answer corr
 otherwise script will either execute or will exit with an error. You may not stop the 
 script once started, this with the purpose of avoiding breaking the system. "
 
+Check_Root
+Check_Server_IP
+CURL_check
+package_manager
+Debug_Log
+
 printf "Starting stage 1 | System Update\n"
 e "You need to set up a new username with or without sudo privilages to avoid logging 
 in with root since it will later be disabled by the script."
