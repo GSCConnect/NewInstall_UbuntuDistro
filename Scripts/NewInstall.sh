@@ -189,7 +189,7 @@ e -------------------------------------------------------------------------
 e "Done"
 read -p 'Do you wish to install CLI Tools? (Yes or No).  :' clitools
 echo  ""
-if [[ $clitools == "yes"]]; then 
+if [[ $clitools == "yes" ]]; then 
     sudo apt install terminator lynis debsecan python3-pip iptraf-ng htop whois net-tools iwconfig glances adb fastboot testdisk locate ncdu libpam-tmpdir libpam-google-authenticator lolcat fortune cowsay fail2ban gnome-disk-utility plank git selinux-utils  terminator rkhunter libpam-ssh libpam-python libpam-mount libpam-mklocaluser libpam-systemd ncdu testdisk debsecan apt-listchanges aptitude iptraf-ng macchanger parted gparted zsh python3-pip cmatrix telegram-desktop telegram-cli sendmail bind9 apache2 apache2-utils needrestart debsums lolcat cowsay -y 
 else 
     echo "$usernew you pretty weird bro..."
