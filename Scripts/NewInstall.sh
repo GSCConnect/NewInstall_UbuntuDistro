@@ -181,6 +181,7 @@ if [[ $sudo_please == "yes" ]]; then
 		usermod -aG sudo $usernew
 		sleep 2
 		e "$usernew has been added to sudo."
+fi 
 e 'Updating packages.... %F{red}NOT OPTIONAL%f'
 
 sudo apt update && sudo apt upgrade -y
@@ -190,7 +191,7 @@ e "Done"
 read -p 'Do you wish to install CLI Tools? (Yes or No).  :' clitools
 echo  ""
 if [[ $clitools == "yes" ]]; then 
-    sudo apt install terminator lynis debsecan python3-pip iptraf-ng htop whois net-tools iwconfig glances adb fastboot testdisk locate ncdu libpam-tmpdir libpam-google-authenticator lolcat fortune cowsay fail2ban gnome-disk-utility plank git selinux-utils  terminator rkhunter libpam-ssh libpam-python libpam-mount libpam-mklocaluser libpam-systemd ncdu testdisk debsecan apt-listchanges aptitude iptraf-ng macchanger parted gparted zsh python3-pip cmatrix telegram-desktop telegram-cli sendmail bind9 apache2 apache2-utils needrestart debsums lolcat cowsay -y 
+    sudo apt install terminator lynis debsecan python3-pip iptraf-ng htop whois net-tools glances adb fastboot testdisk locate ncdu libpam-tmpdir libpam-google-authenticator lolcat fortune cowsay fail2ban gnome-disk-utility plank git selinux-utils  terminator rkhunter libpam-ssh libpam-python libpam-mount libpam-mklocaluser libpam-systemd ncdu testdisk debsecan apt-listchanges aptitude iptraf-ng macchanger parted gparted zsh python3-pip cmatrix telegram-desktop telegram-cli sendmail bind9 apache2 apache2-utils needrestart debsums lolcat cowsay -y 
 else 
     echo "$usernew you pretty weird bro..."
 fi 
@@ -198,7 +199,7 @@ fi
 e "Lets move on now."
 e -------------------------------------------------------------------------
 sleep 4
-e "Installing Lynis and Updating it to the latest update %F{red}ALSO NOT OPTIONAL :) %f"
+e "Installing Lynis and Updating it to the latest update %F{red}ALSO NOT OPTIONAL...%f"
 e -------------------------------------------------------------
 
 
@@ -211,7 +212,8 @@ read -p 'Shall we run Lynis to check your score? Yes or No:  ' audit
 echo ""
 sleep 2
 if [[ $audit == "yes" ]]; then
-    sudo lynis audit system
+	e "Doing Audit with Lynis, please wait."
+    sudo lynis audit system > /tmp/lynisaudit.log
 else 
     echo 'Ok, well you sure are feeling lucky then' && sleep 3
 fi
@@ -253,6 +255,7 @@ nameserver 72.14.188.5" > /etc/resolv.conf
 echo -e "Snap Applications"
 e "Would you like to install Snap?"
 read -p "Plese enter [Yes/No] and press enter:     " snap-apps
+echo ""
 if [[ $snap-apps == "yes" ]]; then
 	sudo apt install snap snapd 
 	sudo snap install nordpass termius-app
@@ -263,8 +266,8 @@ sudo chmod +x jail_user.sh && sudo chmod +x csf.sh
 e "Installing CSF and Adding new User with chroot configuration"
 
 sleep 4
-./csf.sh
-./jail_user.sh
+sudo ./csf.sh
+sudo ./jail_user.sh
 cowsay "Done with that" | lolcat 
 
 sleep 4
@@ -285,7 +288,6 @@ if [[ $dumbass == "yes" ]]; then
 else
     read -p "Type your hostname correctly this time:" dumbass2
 	echo ""
-else
     sudo hostnamectl set-hostname $dumbass2
 fi
 
@@ -318,7 +320,7 @@ else
     e "fuck you then"	
 fi
 
-read --p "what about gs cyberpanel? type 'yeahboy' for yes and 'GS What?' for n" gscp
+read --p "what about gs cyberpanel? type 'yeahboy' for yes and 'GS What?' for no     " gscp
 echo ""
 
 if [[ $gscp == "yeahboy" ]]; the
