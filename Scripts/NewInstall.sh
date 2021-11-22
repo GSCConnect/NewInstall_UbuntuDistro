@@ -143,16 +143,39 @@ echo -e "\n${1}=${2}\n" >> /tmp/install_debug.log
 }
 
 
-e "Another fresh install you fucking Distro Hoper?"
-e "First let's update the packages"
-e "Welcome Mother Fucker, we need to set up a user that ISN'T root, kindly enter the username you wish to setup with sudo privilages"
+e "GSCloud Network Install Script\n
+
+The script will split into 7 stages:
+
+1- System Update.
+2- User Configuration.
+3- Additional Software.
+4- Security Configuration.
+5- Git Configuration.
+6- Configuration Validation. 
+7- Backup Configuration.
+
+Each stage will have substages which will be executed depending on the users input. 
+If you do not wish to install something please make sure to type the answer correctly 
+otherwise script will either execute or will exit with an error. You may not stop the 
+script once started, this with the purpose of avoiding breaking the system. "
+
+printf "Starting stage 1 | System Update\n"
+e "You need to set up a new username with or without sudo privilages to avoid logging 
+in with root since it will later be disabled by the script."
+sleep 10 
 read -p 'Type your username:' usernew
 echo  ""
+echo "Thank you $usernew we will now add you to the system. "
 adduser $usernew
-e "ight $usernew , lets move on"
-usermod -aG sudo $usernew
-sleep 2
-e 'Updating packages'
+read -p "Do you wish to setup sudo privilages to $usernew?   [yes/no]" sudo_please
+echo ""
+
+if [[ $sudo_please == "yes" ]]; then
+		usermod -aG sudo $usernew
+		sleep 2
+		e "$usernew has been added to sudo."
+e 'Updating packages.... %F{red}NOT OPTIONAL%f'
 
 sudo apt update && sudo apt upgrade -y
 
@@ -161,18 +184,16 @@ e "Done"
 read -p 'Do you wish to install CLI Tools? (Yes or No).  :' clitools
 echo  ""
 if [[ $clitools == "yes"]]; then 
-    sudo apt install terminator lynis debsecan python3-pip iptraf-ng htop whois net-tools iwconfig glances adb fastboot testdisk android-sdk locate ncdu libpam-tmpdir libpam-usb -y 
+    sudo apt install terminator lynis debsecan python3-pip iptraf-ng htop whois net-tools iwconfig glances adb fastboot testdisk locate ncdu libpam-tmpdir libpam-google-authenticator lolcat fortune cowsay fail2ban gnome-disk-utility plank git selinux-utils  terminator rkhunter libpam-ssh libpam-python libpam-mount libpam-mklocaluser libpam-systemd ncdu testdisk debsecan apt-listchanges aptitude iptraf-ng macchanger parted gparted zsh python3-pip cmatrix telegram-desktop telegram-cli sendmail bind9 apache2 apache2-utils needrestart debsums lolcat cowsay -y 
 else 
-    echo ' Ok well thats gay'
+    echo "$usernew you pretty weird bro..."
 fi 
 
 e "Lets move on now."
 e -------------------------------------------------------------------------
 sleep 4
-e "You like gotta have this on yo system brother"
+e "Installing Lynis and Updating it to the latest update %F{red}ALSO NOT OPTIONAL :) %f"
 e -------------------------------------------------------------
-
-sudo apt install lolcat fortune cowsay fail2ban gnome-disk-utility plank git selinux-utils  terminator rkhunter libpam-google-authenticator  libpam-tmpdir libpam-passwdqc libpam-ssh libpam-python libpam-mount libpam-mklocaluser libpam-systemd ncdu testdisk debsecan apt-listchanges aptitude iptraf-ng macchanger parted gparted zsh python3-pip cmatrix telegram-desktop telegram-cli sendmail bind9 apache2 apache2-utils  needrestart debsums  -y
 
 
 #adding repository key for lynis 
@@ -189,14 +210,18 @@ else
     echo 'Ok, well you sure are feeling lucky then' && sleep 3
 fi
 
-
+e "Cleaning apt and not needed packages"
 #Clean any old packages from the system 
 sudo apt autoremove -y && apt autopurge -y
 
+read -p "Wanna install some extra software?  [yes/no]" gui_install
+echo ""
+if [[ $gui_install == "yes" ]]; then
 #Stupid shit I like installing
-sudo apt install plank gnome-disk-utility gparted minder telegram-desktop yakuake sl -y
+sudo apt install plank gnome-disk-utility gparted minder telegram-desktop yakuake sl ufw -y
+fi
 
-cowsay "Now lets change some default settings" | lolcat 
+e "Now lets change some default settings" 
 sleep 3
 e "Changing default nameservers..." 
 
@@ -224,8 +249,9 @@ e "Would you like to install Snap?"
 read -p "Plese enter [Yes/No] and press enter:     " snap-apps
 if [[ $snap-apps == "yes" ]]; then
 	sudo apt install snap snapd 
-	sudo snap install norpass termius-app
+	sudo snap install nordpass termius-app
 fi
+
 e "---------------------------------------------------------"
 sudo chmod +x jail_user.sh && sudo chmod +x csf.sh
 e "Installing CSF and Adding new User with chroot configuration"
@@ -276,7 +302,7 @@ mv .bashrc /home/$usernew/.bashrc
 sudo service ssh restart && sudo service fail2ban restart
 
 
-read --p "wanna install the git preloaded config? uh you fancyyyy" fancy
+read --p "wanna install the git preloaded config? " fancy
 echo ""
 
 if [[ $fancy == "yes" ]]; then 
